@@ -112,12 +112,11 @@ def main():
 	for i in range(50):
 		ppl,cost=bga.evaluate_population(ppl)
 		avg_cost=np.append(avg_cost,np.sum(cost)/50)
-	
+	print(ppl)
+	print(cost)
 	plt.plot(avg_cost,'bo')
-	plt.xlabel('x')
-	plt.ylabel('f(x)')
-	
 	plt.show()
+	
 
 if __name__=="__main__":main()
 
