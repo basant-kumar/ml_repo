@@ -3,7 +3,7 @@
 from __future__ import division
 import numpy as np 
 import matplotlib.pyplot as plt 
-import pandas as pd 
+
 
 class Kmeans:
 	def __init__(self,centers=3):
@@ -93,7 +93,7 @@ def main():
 	k=Kmeans(size)
 	x,y=k.data_praparation()
 	cluster,center_list=k.clustering(x,100)
-	
+	#print(cluster.shape)
 	k.kmeans_plot(cluster.astype(np.int64),center_list,x,y)
 
 if __name__=="__main__":main()
