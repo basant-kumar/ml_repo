@@ -28,7 +28,10 @@ class Kmeans:
 		plt.figure(figsize=(14,7))
 
 		# Create a colormap
-		colormap = np.array(['red', 'lime', 'black'])
+		if(self.centers>9):
+			print("please add more colors in colormap array at line 33")
+			exit(0)
+		colormap = np.array(['red', 'lime', 'black','blue','yellow','green','brown','orange','violet'])
 		 
 		# Plot the Original Classifications
 		plt.subplot(1, 2, 1)
@@ -67,10 +70,10 @@ class Kmeans:
 			#print(cluster)
 			avg=np.zeros((self.centers,x.shape[1]))
 			for j in xrange(x.shape[0]):
-				avg[cluster[j]][0]+=x[j][0]
-				avg[cluster[j]][1]+=x[j][1]
-				avg[cluster[j]][2]+=x[j][2]
-				avg[cluster[j]][3]+=x[j][3]
+				avg[int(cluster[j])][0]+=x[j][0]
+				avg[int(cluster[j])][1]+=x[j][1]
+				avg[int(cluster[j])][2]+=x[j][2]
+				avg[int(cluster[j])][3]+=x[j][3]
 			#print(avg)
 			for j in xrange(self.centers):
 				avg[j]=np.divide(avg[j],points_in_cluster[j])
@@ -86,7 +89,8 @@ class Kmeans:
 
 
 def main():
-	k=Kmeans(3)
+	size=int(input("enter the number of clusters\n"))
+	k=Kmeans(size)
 	x,y=k.data_praparation()
 	cluster,center_list=k.clustering(x,100)
 	

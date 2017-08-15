@@ -106,15 +106,19 @@ class Binary_GA:
 
 
 def main():
-	bga=Binary_GA(50,10)
+	s1=int(input("enter the size of the population\n"))
+	s2=int(input("enter the size of the chromosome\n"))
+	bga=Binary_GA(s1,s2)
 	ppl=bga.data_genration()
 	avg_cost=[]
 	for i in range(50):
 		ppl,cost=bga.evaluate_population(ppl)
 		avg_cost=np.append(avg_cost,np.sum(cost)/50)
-	print(ppl)
-	print(cost)
+	print("population:\n{}".format(ppl))
+	print("cost of population:\n{}".format(cost))
 	plt.plot(avg_cost,'bo')
+	plt.ylabel("average cost------>")
+	plt.xlabel("Iterations---->")
 	plt.show()
 	
 
