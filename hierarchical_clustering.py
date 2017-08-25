@@ -19,8 +19,7 @@ import itertools
 
 
 class Hierarchical_Clustering:
-	def __init__(self, c_type="a", dist_measure="min", input_file_name="iris-data", k=1):
-		self.c_type=c_type
+	def __init__(self, dist_measure="min", input_file_name="iris-data", k=1):
 		self.dist_measure=dist_measure
 		self.input_file_name=input_file_name
 		self.k=k
@@ -91,7 +90,10 @@ class Hierarchical_Clustering:
 		return centroid	
 
 	def build_priority_queue(self, distance_list):
-		heapq.heapify(distance_list)
+		if(self.dist_measure=="min"):
+			heapq.heapify(distance_list)
+		else:
+			heapq._heapify_max(distance_list)
 		self.heap=distance_list
 		return self.heap
 
@@ -216,8 +218,8 @@ class Hierarchical_Clustering:
 		raise SystemExit('\n'+ "PROGRAM EXIT: " + err_desc + ', please check your input' + '\n')	
 
 	def display(self, current_clusters, precision, recall):
-	    print precision
-	    print recall
+	    #print precision
+	    #print recall
 	    clusters = current_clusters.values()
 	    for cluster in clusters:
 	        cluster["elements"].sort()
@@ -227,13 +229,16 @@ class Hierarchical_Clustering:
 def main():
 	'''python HC.py -a/-c -min/-max/-avg input_file_name'''
 	#x,y=data_preparation();
-	c_type = sys.argv[1]
-	dm = sys.argv[2]
-	filename = sys.argv[3]     
-	k = int(sys.argv[4])
+	if ((len(sys.argv) < 4 or  len(sys.argv) > 4)):
+		print("\nUsage: python hierarchical.py [min/max] [input_file_name] [# of clusters]\n")
+		print("Currently its only support Agglomerative hierarchical clustering with min and max distance measures\n")
+		sys.exit(0)
+	dm = sys.argv[1]
+	filename = sys.argv[2]     
+	k = int(sys.argv[3])
 	
 
-	hc = Hierarchical_Clustering(c_type, dm, filename, k)
+	hc = Hierarchical_Clustering(dm, filename, k)
 	hc.initialize()
 	current_clusters=hc.hierarchical_clustering()
 	precision, recall = hc.evaluate(current_clusters)
